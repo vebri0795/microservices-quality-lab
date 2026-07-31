@@ -1,7 +1,7 @@
 // This client talks to inventory-service over HTTP.
 import axios from 'axios';
 
-function getInventoryUrl(): string {
+export function getInventoryUrl(): string {
   return process.env.INVENTORY_URL || 'http://localhost:4001';
 }
 
