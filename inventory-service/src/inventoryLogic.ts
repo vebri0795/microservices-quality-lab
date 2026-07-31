@@ -15,7 +15,7 @@ export interface ReserveResult {
   error?: string;
 }
 
-export function reserveStock(catalog: Catalog, sku: string, quantity: number): ReserveResult {
+export function reserveStock(catalog: Catalog, sku: string, quantity: unknown): ReserveResult {
   let result: ReserveResult;
   const item = getStock(catalog, sku);
 
@@ -23,6 +23,11 @@ export function reserveStock(catalog: Catalog, sku: string, quantity: number): R
     result = {
       ok: false,
       error: 'sku not found'
+    }
+  } else if(typeof quantity !== 'number' || quantity <= 0) {
+    result = {
+      ok: false,
+      error: 'invalid quantity'
     }
   } else if(item.quantity < quantity) {
     result = {

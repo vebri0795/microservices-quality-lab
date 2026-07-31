@@ -20,7 +20,8 @@ export function createApp() {
     const { quantity } = req.body;
     const result = reserveStock(catalog, req.params.sku, quantity);
     if (!result.ok) {
-      const status = result.error === 'sku not found' ? 404 : 409;
+      const status =
+        result.error === 'sku not found' ? 404 : result.error === 'invalid quantity' ? 400 : 409;
       return res.status(status).json({ error: result.error });
     }
     res.json({ sku: req.params.sku, remaining: result.remaining });

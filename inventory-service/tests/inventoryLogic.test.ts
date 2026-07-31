@@ -30,4 +30,18 @@ describe('reserveStock', () => {
     const result = reserveStock(catalog, 'sku-x', 1);
     expect(result).toEqual({ ok: false, error: 'sku not found' });
   });
+
+  it('rejects a negative quantity instead of adding it to the stock', () => {
+    const catalog: Catalog = { 'sku-1': { price: 10, quantity: 5 } };
+    const result = reserveStock(catalog, 'sku-1', -3);
+    expect(result).toEqual({ ok: false, error: 'invalid quantity' });
+    expect(catalog['sku-1'].quantity).toBe(5);
+  });
+
+  it('rejects a non-numeric quantity instead of corrupting the stock', () => {
+    const catalog: Catalog = { 'sku-1': { price: 10, quantity: 5 } };
+    const result = reserveStock(catalog, 'sku-1', 'not-a-number');
+    expect(result).toEqual({ ok: false, error: 'invalid quantity' });
+    expect(catalog['sku-1'].quantity).toBe(5);
+  });
 });
