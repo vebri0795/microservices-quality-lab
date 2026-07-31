@@ -6,7 +6,6 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",
-    "test:integration": "jest --testPathIgnorePatterns=/node_modules/ --testPathPattern=integration.test.ts --testTimeout=10000",
     "test:pact": "jest --testPathIgnorePatterns=/node_modules/ --testPathPattern=pact.test.ts --testTimeout=30000",
     "lint": "eslint ."
   },
@@ -39,7 +38,6 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/",
-      "\\.integration\\.test\\.ts$",
       "\\.pact\\.test\\.ts$"
     ]
   }

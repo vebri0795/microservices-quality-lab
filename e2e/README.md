@@ -23,9 +23,9 @@ docker compose down
 - `orders-service/tests/*.test.ts` (unit) and `orders.component.test.ts`
   (component) never start real containers — they run the app in-process,
   virtualizing or mocking the network.
-- `orders-service/tests/inventoryClient.integration.test.ts` starts a real
-  `inventory-service`, but calls one client function in-process — it never
-  goes through `orders-service`'s own HTTP layer.
+- The contract tests (`inventoryClient.pact.test.ts` / `pact.verify.test.ts`)
+  verify each service against a shared, versioned spec — but the two
+  services never run together in the same test.
 - These e2e tests are the only ones that exercise the full deployed chain:
   HTTP request → `orders-service` container → real `inventory-service`
   container → HTTP response — the same path a real consumer would hit.

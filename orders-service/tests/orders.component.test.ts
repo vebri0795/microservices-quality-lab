@@ -1,7 +1,7 @@
 // Component test: the real orders-service app (routing, validation, the
 // orderLogic it calls) runs for real. Only the network call to
 // inventory-service is virtualized via MSW — no real inventory-service
-// process, no docker-compose, unlike inventoryClient.integration.test.ts.
+// process, no docker-compose.
 import request from 'supertest';
 import { rest } from 'msw';
 import { server } from './mocks/server';
