@@ -10,8 +10,8 @@
 // This drives the full chain: HTTP request -> orders-service container ->
 // real inventory-service container -> HTTP response.
 
-const ORDERS_URL = 'http://localhost:4000';
-const INVENTORY_URL = 'http://localhost:4001';
+const ORDERS_URL = process.env.ORDERS_URL || 'http://localhost:4000';
+const INVENTORY_URL = process.env.INVENTORY_URL || 'http://localhost:4001';
 
 describe('POST /orders (e2e)', () => {
   it('confirms the order and actually decrements stock in inventory-service', async () => {
