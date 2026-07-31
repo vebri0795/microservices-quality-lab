@@ -14,9 +14,9 @@ jobs:
       matrix:
         service: [orders-service, inventory-service]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
           cache: npm
@@ -39,22 +39,22 @@ jobs:
     needs: lint-and-unit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 20
 
-      # Lado consumidor: orders-service genera el contrato Pact contra su
-      # propio mock server y lo escribe en orders-service/pacts/.
+      # Consumer side: orders-service generates the Pact contract against its
+      # own mock server and writes it to orders-service/pacts/.
       - working-directory: orders-service
         run: npm ci
 
       - working-directory: orders-service
         run: npm run test:pact
 
-      # Lado proveedor: inventory-service levanta el servidor real y verifica
-      # que cumple el contrato que orders-service acaba de generar.
+      # Provider side: inventory-service starts the real server and verifies
+      # that it fulfills the contract orders-service just generated.
       - working-directory: inventory-service
         run: npm ci
 
@@ -69,6 +69,6 @@ jobs:
       matrix:
         service: [orders-service, inventory-service]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - run: docker build -t ${{ matrix.service }}:ci-${{ github.sha }} ./${{ matrix.service }}
