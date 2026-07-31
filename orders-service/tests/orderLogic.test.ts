@@ -1,4 +1,4 @@
-import { validateOrderInput, calculateTotal } from './orderLogic';
+import { validateOrderInput, calculateTotal } from '../src/orderLogic';
 
 describe('validateOrderInput', () => {
   it('accepts a valid input', () => {

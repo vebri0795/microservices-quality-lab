@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { getInventoryUrl } from '../inventoryClient';
+import { getInventoryUrl } from '../../src/inventoryClient';
 
 // MSW handlers that stand in for inventory-service over HTTP, so component
 // tests can drive the real orders-service app without a real inventory-service
