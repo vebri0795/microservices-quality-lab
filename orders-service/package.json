@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "ts-node-dev src/index.ts",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc",
     "start": "node dist/index.js",
     "test": "jest",
     "test:integration": "jest --testPathIgnorePatterns=/node_modules/ --testPathPattern=integration.test.ts --testTimeout=10000",
@@ -34,7 +34,7 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
-      "<rootDir>/src/mocks/setupTests.ts"
+      "<rootDir>/tests/mocks/setupTests.ts"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",

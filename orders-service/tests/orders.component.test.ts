@@ -5,8 +5,8 @@
 import request from 'supertest';
 import { rest } from 'msw';
 import { server } from './mocks/server';
-import { createApp } from './app';
-import { getInventoryUrl } from './inventoryClient';
+import { createApp } from '../src/app';
+import { getInventoryUrl } from '../src/inventoryClient';
 import { buildOrderRequest } from '../../test-data';
 
 const app = createApp();

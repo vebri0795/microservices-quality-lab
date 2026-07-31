@@ -1,4 +1,4 @@
-import { getStock, reserveStock, Catalog } from './inventoryLogic';
+import { getStock, reserveStock, Catalog } from '../src/inventoryLogic';
 
 describe('getStock', () => {
   it('returns the item if the sku exists', () => {

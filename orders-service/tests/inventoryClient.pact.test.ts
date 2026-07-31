@@ -1,6 +1,6 @@
 import path from 'path';
 import { PactV3, MatchersV3 } from '@pact-foundation/pact';
-import { getInventory, reserveInventory } from './inventoryClient';
+import { getInventory, reserveInventory } from '../src/inventoryClient';
 
 const { like } = MatchersV3;
 

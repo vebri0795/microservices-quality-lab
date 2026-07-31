@@ -1,4 +1,4 @@
-import { getInventory, reserveInventory } from './inventoryClient';
+import { getInventory, reserveInventory } from '../src/inventoryClient';
 
 // Integration test: requires inventory-service to be running for REAL
 // (e.g. `npm run dev` inside inventory-service, or `docker compose up`)
