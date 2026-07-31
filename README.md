@@ -1,3 +1,5 @@
+[![CI](https://github.com/vebri0795/microservices-quality-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/vebri0795/microservices-quality-lab/actions/workflows/ci.yml)
+
 # Phase 1 — Fundamentals + first microservice
 
 Two services: `inventory-service` and `orders-service`. `orders-service`
