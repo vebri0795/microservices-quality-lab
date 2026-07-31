@@ -7,10 +7,8 @@
 //
 // ...and `docker compose down` afterwards.
 //
-// Unlike inventoryClient.integration.test.ts (which calls one function
-// in-process against a real inventory-service), this drives the full chain:
-// HTTP request -> orders-service container -> real inventory-service
-// container -> HTTP response.
+// This drives the full chain: HTTP request -> orders-service container ->
+// real inventory-service container -> HTTP response.
 
 const ORDERS_URL = 'http://localhost:4000';
 const INVENTORY_URL = 'http://localhost:4001';

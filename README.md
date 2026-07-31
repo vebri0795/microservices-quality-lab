@@ -44,14 +44,13 @@ editor and `ts-jest` still get full type support for files under `tests/`.
 
 ## The test pyramid, applied
 
-Five layers, each catching a different class of bug — deliberately chosen so
+Four layers, each catching a different class of bug — deliberately chosen so
 no two layers protect against the same failure:
 
 | Layer | Where | What runs for real | What's virtualized | Bug it catches |
 |---|---|---|---|---|
 | **Unit** | `*.test.ts` in each `tests/` | Pure functions (`orderLogic`, `inventoryLogic`) | Everything — no HTTP, no I/O | Wrong business rules, e.g. bad total math or a validation edge case |
 | **Component** | `orders.component.test.ts` | The real Express app, via `supertest` | The network call to `inventory-service`, via MSW | Routing/wiring bugs, or `orders-service` mishandling a `404`/`409` from its dependency — without needing a second process running |
-| **Integration** | `inventoryClient.integration.test.ts` | A real `inventory-service`, called over real HTTP | Nothing | Wire-format mismatches, wrong env/URL config — anything a mock could hide |
 | **Contract** | `inventoryClient.pact.test.ts` (consumer) + `pact.verify.test.ts` (provider) | Pact's mock server (consumer side) / the real provider (provider side) | The other service, on each side | A breaking API change on either side, caught before the two services ever run together in a shared environment |
 | **End-to-end** | `e2e/orders.e2e.test.ts` | Both services as real Docker containers (`docker compose up --build`) | Nothing | Anything below can't see: a broken `Dockerfile`, wrong `docker-compose` networking, misconfigured env vars — does the *shipped* system actually work |
 
@@ -93,6 +92,13 @@ definition instead of drifting across test files.
   services' `src/`; an explicit `rootDir` made TypeScript reject any import
   crossing that boundary. Removing it lets each invocation (build vs. test)
   infer its own root.
+- **Dropped the standalone integration test.** An earlier version had a
+  fifth layer — a test that called `orders-service`'s HTTP client directly
+  against a real, separately-started `inventory-service`. It was never wired
+  into CI, and everything it covered (wire-format compatibility, the full
+  real request path) was already covered by the contract tests and the e2e
+  suite. Kept it as long as it was pulling its own weight; cut it once it
+  was pure maintenance cost with no unique coverage.
 - **Phase 5 was scoped down on purpose.** The original plan included
   provisioning a local Kubernetes cluster and deploying via ArgoCD. That's
   Platform/DevOps work, not something a QA Automation Engineer typically
@@ -104,9 +110,8 @@ definition instead of drifting across test files.
 ```bash
 # per service
 cd orders-service && npm install
-npm test                 # unit + component (network mocked)
-npm run test:integration # needs a real inventory-service running
-npm run test:pact        # contract tests (consumer + provider)
+npm test          # unit + component (network mocked)
+npm run test:pact # contract tests (consumer + provider)
 
 cd ../inventory-service && npm install
 npm test
