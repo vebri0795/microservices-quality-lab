@@ -17,7 +17,7 @@ export interface ReserveResult {
 
 export function reserveStock(catalog: Catalog, sku: string, quantity: number): ReserveResult {
   let result: ReserveResult;
-  let item = getStock(catalog, sku);
+  const item = getStock(catalog, sku);
 
   if(!item) {
     result = {

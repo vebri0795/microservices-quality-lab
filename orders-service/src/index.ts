@@ -18,8 +18,9 @@ app.post('/orders', async (req, res) => {
     await reserveInventory(sku, quantity);
     const total = calculateTotal(item.price, quantity);
     res.status(201).json({ sku, quantity, total, status: 'confirmed' });
-  } catch (err: any) {
-    res.status(502).json({ error: 'could not process order', detail: err.message });
+  } catch (err) {
+    const detail = err instanceof Error ? err.message : 'unknown error';
+    res.status(502).json({ error: 'could not process order', detail });
   }
 });
 
