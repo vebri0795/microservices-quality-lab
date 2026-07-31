@@ -1,4 +1,4 @@
-// Este cliente habla con inventory-service por HTTP.
+// This client talks to inventory-service over HTTP.
 import axios from 'axios';
 
 function getInventoryUrl(): string {

@@ -10,15 +10,15 @@ const provider = new PactV3({
   dir: path.resolve(process.cwd(), 'pacts'),
 });
 
-// Contract test (lado consumidor). No se levanta inventory-service real:
-// Pact crea un mock server que responde según la interacción descrita en
-// cada test, y si tu código hace la petición que describiste, escribe el
-// contrato en pacts/orders-service-inventory-service.json.
+// Contract test (consumer side). No real inventory-service is started:
+// Pact creates a mock server that responds according to the interaction
+// described in each test, and if your code makes the request you described,
+// it writes the contract to pacts/orders-service-inventory-service.json.
 describe('Pact contract: orders-service -> inventory-service', () => {
-  it('obtiene el inventario de un sku existente', () => {
+  it('gets the inventory for an existing sku', () => {
     provider
-      .given('sku-1 existe en el catalogo')
-      .uponReceiving('una peticion para obtener sku-1')
+      .given('sku-1 exists in the catalog')
+      .uponReceiving('a request to get sku-1')
       .withRequest({ method: 'GET', path: '/inventory/sku-1' })
       .willRespondWith({
         status: 200,
@@ -34,10 +34,10 @@ describe('Pact contract: orders-service -> inventory-service', () => {
     });
   });
 
-  it('reserva stock cuando hay suficiente', () => {
+  it('reserves stock when there is enough', () => {
     provider
-      .given('sku-1 tiene stock suficiente')
-      .uponReceiving('una peticion para reservar 1 unidad de sku-1')
+      .given('sku-1 has enough stock')
+      .uponReceiving('a request to reserve 1 unit of sku-1')
       .withRequest({
         method: 'POST',
         path: '/inventory/sku-1/reserve',
@@ -56,10 +56,10 @@ describe('Pact contract: orders-service -> inventory-service', () => {
     });
   });
 
-  it('rechaza la reserva cuando no hay stock suficiente', () => {
+  it('rejects the reservation when there is not enough stock', () => {
     provider
-      .given('sku-1 no tiene stock suficiente')
-      .uponReceiving('una peticion para reservar mas stock del disponible')
+      .given('sku-1 does not have enough stock')
+      .uponReceiving('a request to reserve more stock than available')
       .withRequest({
         method: 'POST',
         path: '/inventory/sku-1/reserve',

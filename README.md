@@ -1,43 +1,45 @@
-# Fase 1 — Fundamentos + primer microservicio
+# Phase 1 — Fundamentals + first microservice
 
-Dos servicios: `inventory-service` y `orders-service`. `orders-service` recibe
-pedidos y le pregunta a `inventory-service` si hay stock antes de confirmar.
+Two services: `inventory-service` and `orders-service`. `orders-service`
+receives orders and asks `inventory-service` whether there's stock before
+confirming.
 
-El boilerplate (servidor Express, rutas, Docker, tsconfig) ya está montado
-para que no pierdas tiempo ahí. Lo que falta por implementar son dos
-funciones de lógica pura — justo las piezas que se testean unitariamente.
+The boilerplate (Express server, routes, Docker, tsconfig) is already set up
+so you don't waste time on that. What's left to implement are two pure logic
+functions — exactly the pieces that get unit tested.
 
-## Qué tienes que hacer
+## What you need to do
 
 1. `cd inventory-service && npm install`
-2. Abre `src/inventoryLogic.ts` y completa `reserveStock` (las reglas están
-   en el comentario TODO justo encima de la función).
-3. Corre `npm test` — los tests de `reserveStock` deben pasar en verde.
-4. Repite lo mismo en `orders-service`: `npm install`, completa
-   `calculateTotal` en `src/orderLogic.ts`, corre `npm test`.
-5. Cuando ambos `npm test` pasen, levanta todo junto desde la raíz:
+2. Open `src/inventoryLogic.ts` and complete `reserveStock` (the rules are
+   in the TODO comment right above the function).
+3. Run `npm test` — the `reserveStock` tests should pass.
+4. Do the same in `orders-service`: `npm install`, complete
+   `calculateTotal` in `src/orderLogic.ts`, run `npm test`.
+5. Once both `npm test` pass, bring everything up together from the root:
    ```
    docker-compose up --build
    ```
-6. Prueba el flujo completo:
+6. Test the full flow:
    ```
    curl -X POST http://localhost:4000/orders \
      -H "Content-Type: application/json" \
      -d '{"sku":"sku-1","quantity":2}'
    ```
-   Deberías recibir un 201 con el total calculado.
+   You should get a 201 with the calculated total.
 
-## Definición de "terminado" para esta fase
+## "Done" definition for this phase
 
-- [ ] `npm test` pasa en los dos servicios sin tocar los archivos `.test.ts`
-- [ ] `docker-compose up` levanta ambos servicios sin errores
-- [ ] La petición curl de arriba responde 201 con el total correcto
-- [ ] Puedes explicar en una frase la diferencia entre lo que testea
-      `orderLogic.test.ts` (unitario, con todo mockeado) y lo que
-      probarías si hicieras que los dos servicios se hablen de verdad
-      (eso es la Fase 2)
+- [ ] `npm test` passes in both services without touching the `.test.ts` files
+- [ ] `docker-compose up` brings up both services with no errors
+- [ ] The curl request above responds 201 with the correct total
+- [ ] You can explain in one sentence the difference between what
+      `orderLogic.test.ts` tests (unit, everything mocked) and what you'd
+      test if you made the two services talk to each other for real
+      (that's Phase 2)
 
-## Siguiente paso
+## Next step
 
-Cuando lo tengas, dime "terminé la fase 1" y revisamos tu implementación
-antes de pasar a integration tests + contract testing con Pact.
+Once you have it, tell me "finished phase 1" and we'll review your
+implementation before moving on to integration tests + contract testing
+with Pact.

@@ -1,18 +1,18 @@
 import { validateOrderInput, calculateTotal } from './orderLogic';
 
 describe('validateOrderInput', () => {
-  it('acepta un input valido', () => {
+  it('accepts a valid input', () => {
     expect(validateOrderInput({ sku: 'sku-1', quantity: 2 })).toEqual({ valid: true });
   });
 
-  it('rechaza si falta el sku', () => {
+  it('rejects if sku is missing', () => {
     expect(validateOrderInput({ quantity: 2 })).toEqual({
       valid: false,
       error: 'sku is required',
     });
   });
 
-  it('rechaza si la cantidad no es positiva', () => {
+  it('rejects if quantity is not positive', () => {
     expect(validateOrderInput({ sku: 'sku-1', quantity: 0 })).toEqual({
       valid: false,
       error: 'quantity must be a positive number',
@@ -21,15 +21,15 @@ describe('validateOrderInput', () => {
 });
 
 describe('calculateTotal', () => {
-  it('calcula el total correctamente', () => {
+  it('calculates the total correctly', () => {
     expect(calculateTotal(10, 3)).toBe(30);
   });
 
-  it('lanza un error si el precio es negativo', () => {
+  it('throws an error if the price is negative', () => {
     expect(() => calculateTotal(-5, 3)).toThrow('invalid price or quantity');
   });
 
-  it('lanza un error si la cantidad es negativa', () => {
+  it('throws an error if the quantity is negative', () => {
     expect(() => calculateTotal(5, -3)).toThrow('invalid price or quantity');
   });
 });
