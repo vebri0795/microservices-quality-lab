@@ -24,8 +24,8 @@ describe('POST /orders (e2e)', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ sku: 'sku-2', quantity: 1 }),
     });
+    
     const body = await res.json();
-
     expect(res.status).toBe(201);
     expect(body.total).toBe(before.price * 1);
 
