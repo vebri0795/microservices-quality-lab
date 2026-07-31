@@ -22,7 +22,7 @@ describe('validateOrderInput', () => {
 
 describe('calculateTotal', () => {
   it('calculates the total correctly', () => {
-    expect(calculateTotal(10, 3)).toBe(60);
+    expect(calculateTotal(10, 3)).toBe(30);
   });
 
   it('throws an error if the price is negative', () => {
