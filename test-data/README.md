@@ -3,11 +3,14 @@
 Shared test-data factories for `orders-service` and `inventory-service`.
 
 Not an npm package — it's a plain folder of TypeScript, imported via a relative
-path from test files in either service (e.g.
-`import { buildInventoryItem } from '../../test-data';`). Both services'
-`tsconfig.json` exclude `src/**/*.test.ts` from the production build, so these
-files never need to be compiled or shipped — they only exist at test time,
-transformed on the fly by `ts-jest`.
+path from test files in either service. The exact path depends on how deeply
+nested the importing file is, e.g.
+`import { buildOrderRequest } from '../../test-data';` from
+`orders-service/tests/orders.component.test.ts`, or
+`import { buildInventoryItem } from '../../../test-data';` from
+`orders-service/tests/mocks/handlers.ts`. Both services' `tsconfig.json` only
+`include` their own `src/`, so these files never need to be compiled or
+shipped — they only exist at test time, transformed on the fly by `ts-jest`.
 
 ## Why
 
