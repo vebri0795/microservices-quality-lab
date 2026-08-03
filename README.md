@@ -92,6 +92,13 @@ definition instead of drifting across test files.
   services' `src/`; an explicit `rootDir` made TypeScript reject any import
   crossing that boundary. Removing it lets each invocation (build vs. test)
   infer its own root.
+- **Multi-stage `Dockerfile`s.** The original single-stage build shipped every
+  devDependency (Jest, ESLint, TypeScript, MSW, the Pact toolchain...) inside
+  the production image — 730MB / 624MB for two small Express apps. A
+  `builder` stage now runs `npm ci` + `tsc`, and the final stage only
+  installs with `--omit=dev` and copies the compiled `dist/`, dropping both
+  images to ~200MB with zero runtime dependency vulnerabilities carried over
+  from dev tooling.
 - **Dropped the standalone integration test.** An earlier version had a
   fifth layer — a test that called `orders-service`'s HTTP client directly
   against a real, separately-started `inventory-service`. It was never wired
